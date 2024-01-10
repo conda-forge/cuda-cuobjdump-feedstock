@@ -31,6 +31,7 @@ requirements:
     - cuda-version {{ cuda_version }}
   run:
     - {{ pin_compatible("cuda-version", max_pin="x.x") }}
+    - cuda-nvdisasm
 
 test:
   commands:
