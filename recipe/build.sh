@@ -14,4 +14,10 @@ for i in `ls`; do
 
     # bin installed in PREFIX
     cp -rv $i ${PREFIX}
+
+    if [[ $i == "bin" ]]; then
+        for j in `ls "${i}"`; do
+            patchelf --force-rpath --set-rpath "\$ORIGIN/../lib:\$ORIGIN/../${targetsDir}/lib" "${PREFIX}/${i}/${j}";
+        done
+    fi
 done

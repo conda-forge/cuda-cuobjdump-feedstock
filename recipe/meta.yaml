@@ -20,6 +20,7 @@ source:
 
 build:
   number: 0
+  binary_relocation: false
   skip: true  # [osx or ppc64le]
 
 requirements:
@@ -34,8 +35,13 @@ requirements:
     - cuda-nvdisasm
 
 test:
+  requires:
+    - patchelf  # [linux]
+  files:
+    - test-rpath.sh
   commands:
-    - test -f $PREFIX/bin/cuobjdump  # [linux]
+    - test -f $PREFIX/bin/cuobjdump                     # [linux]
+    - bash test-rpath.sh                                # [linux]
     - if not exist %LIBRARY_BIN%\\cuobjdump.exe exit 1  # [win]
 
 about:
