@@ -17,6 +17,8 @@ for i in `ls`; do
 
     if [[ $i == "bin" ]]; then
         for j in `ls "${i}"`; do
+            { [[ "${j}" =~ patchelf ]] || [[ "${j}" =~ "nvdisasm" ]]; } && continue
+            echo patchelf --force-rpath --set-rpath "\$ORIGIN/../lib:\$ORIGIN/../${targetsDir}/lib" "${PREFIX}/${i}/${j}";
             patchelf --force-rpath --set-rpath "\$ORIGIN/../lib:\$ORIGIN/../${targetsDir}/lib" "${PREFIX}/${i}/${j}";
         done
     fi

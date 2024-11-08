@@ -9,6 +9,8 @@ errors=""
 echo "\$PKG_NAME: ${PKG_NAME}"
 
 for bin in `find ${PREFIX}/bin -type f`; do
+    { [[ "${bin}" =~ patchelf ]] || [[ "${bin}" =~ "nvdisasm" ]]; } && continue
+
     pkg_info=$(conda package -w "${bin}")
     echo "\$PKG_NAME: ${PKG_NAME}"
     echo "\$pkg_info: ${pkg_info}"
@@ -17,11 +19,12 @@ for bin in `find ${PREFIX}/bin -type f`; do
         echo "Skipping ${bin}"
         continue
     else
-        echo "Match found"
-        echo "Testing ${bin}"
+        echo "Match found, testing ${bin}"
     fi
+
     rpath=$(patchelf --print-rpath "${bin}")
     echo "${bin} rpath: ${rpath}"
+
     if [[ $rpath != "\$ORIGIN/../lib:\$ORIGIN/../${targetsDir}/lib" ]]; then
         errors+="${bin}\n"
     elif [[ $(objdump -x ${bin} | grep "PATH") == *"RUNPATH"* ]]; then
@@ -32,8 +35,5 @@ done
 if [[ $errors ]]; then
     echo "The following binaries were found with an unexpected RPATH:"
     echo -e "${errors}"
-
     exit 1
-else
-    exit 0
 fi
