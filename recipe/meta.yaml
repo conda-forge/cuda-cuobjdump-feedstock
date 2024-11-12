@@ -19,7 +19,8 @@ source:
   sha256: b9207c09a5d6b34e6bdd8ff2093b3d101ef85f08b34c8ba8d710050b522661ae  # [win]
 
 build:
-  number: 0
+  number: 1
+  binary_relocation: false
   skip: true  # [osx or ppc64le]
 
 requirements:
@@ -34,8 +35,13 @@ requirements:
     - cuda-nvdisasm
 
 test:
+  requires:
+    - patchelf  # [linux]
+  files:
+    - test-rpath.sh
   commands:
-    - test -f $PREFIX/bin/cuobjdump  # [linux]
+    - test -f $PREFIX/bin/cuobjdump                     # [linux]
+    - bash test-rpath.sh                                # [linux]
     - if not exist %LIBRARY_BIN%\\cuobjdump.exe exit 1  # [win]
 
 about:
