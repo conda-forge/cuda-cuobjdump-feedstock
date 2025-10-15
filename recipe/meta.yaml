@@ -3,7 +3,10 @@
 {% set cuda_version = "12.9" %}
 {% set platform = "linux-x86_64" %}  # [linux64]
 {% set platform = "linux-ppc64le" %}  # [ppc64le]
-{% set platform = "linux-sbsa" %}  # [aarch64]
+{% set platform = "linux-sbsa" %}  # [aarch64 and arm_variant_type=="sbsa"]
+{% set platform = "linux-aarch64" %}  # [aarch64 and arm_variant_type=="tegra"]
+{% set target_name = "sbsa-linux" %}  # [aarch64 and arm_variant_type=="sbsa"]
+{% set target_name = "aarch64-linux" %}  # [aarch64 and arm_variant_type=="tegra"]
 {% set platform = "windows-x86_64" %}  # [win]
 {% set extension = "tar.xz" %}  # [not win]
 {% set extension = "zip" %}  # [win]
@@ -15,11 +18,12 @@ package:
 source:
   url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuobjdump/{{ platform }}/cuda_cuobjdump-{{ platform }}-{{ version }}-archive.{{ extension }}
   sha256: ee0de40e8c18068bfcc53e73510e7e7a1a80555205347940df67fa525d24452f  # [linux64]
-  sha256: 2d39ae9309f81a7980df296a93c0e49215c6fb22d316fd9daae211d29a731d27  # [aarch64]
+  sha256: 2d39ae9309f81a7980df296a93c0e49215c6fb22d316fd9daae211d29a731d27  # [aarch64 and arm_variant_type=="sbsa"]
+  sha256: 91a9ae2935b411d136c2c61ccbbc0df3a83f17cce122d12d262be202217163ee  # [aarch64 and arm_variant_type=="tegra"]
   sha256: 1eda43a76a2eac25fce5bdb4b68673b5bda737d54cca5513148c36362ab7c811  # [win]
 
 build:
-  number: 0
+  number: 1
   binary_relocation: false
   skip: true  # [osx or ppc64le]
 
