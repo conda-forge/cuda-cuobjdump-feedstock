@@ -1,6 +1,6 @@
 {% set name = "cuda-cuobjdump" %}
-{% set version = "13.2.51" %}
-{% set cuda_version = "13.2.0" %}
+{% set version = "13.2.78" %}
+{% set cuda_version = "13.2" %}
 {% set platform = "linux-x86_64" %}  # [linux64]
 {% set platform = "linux-ppc64le" %}  # [ppc64le]
 {% set platform = "linux-sbsa" %}  # [aarch64]
@@ -14,12 +14,12 @@ package:
 
 source:
   url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuobjdump/{{ platform }}/cuda_cuobjdump-{{ platform }}-{{ version }}-archive.{{ extension }}
-  sha256: f0fb475dfc5b08a0e77cdcd05e7ea15402756ad8418898f4e93ada8b19661271  # [linux64]
-  sha256: ee308d1e61e7c753d3c2912e0c49fae7e5c2ef5e6be3c8a2ea705b5c673df923  # [aarch64]
-  sha256: 85df7d24fa3dc534be028b655d77ec778f854eb3d9cef82b004bea65fe320976  # [win]
+  sha256: 85541582eb4689e3012627913468ab14fda6676ee95e01b0247e5bd6a174dc61  # [linux64]
+  sha256: b0414bc750bd5087fa80020e208a0d72e76bfe0eeb201e3d46721fb4f783bda0  # [aarch64]
+  sha256: f41fd7ecb9de9db155a56aaf47d93ae407b73684ec434edd17c2637ddef9563e  # [win]
 
 build:
-  number: 1
+  number: 0
   binary_relocation: false
   skip: true  # [osx or ppc64le]
 
